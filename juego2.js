@@ -2,17 +2,23 @@
 
 const nomp1p1 = document.getElementById('p1_p1')
 const vidp1p1 = document.getElementById('p1_p1_vi')
+const fotp1p1 = document.getElementById('p1_p1_fo')
 const nomp1p2 = document.getElementById('p1_p2')
 const vidp1p2 = document.getElementById('p1_p2_vi')
+const fotp1p2 = document.getElementById('p1_p2_fo')
 const nomp1p3 = document.getElementById('p1_p3')
 const vidp1p3 = document.getElementById('p1_p3_vi')
+const fotp1p3 = document.getElementById('p1_p3_fo')
 
 const nomp2p1 = document.getElementById('p2_p1')
 const vidp2p1 = document.getElementById('p2_p1_vi')
+const fotp2p1 = document.getElementById('p2_p1_fo')
 const nomp2p2 = document.getElementById('p2_p2')
 const vidp2p2 = document.getElementById('p2_p2_vi')
+const fotp2p2 = document.getElementById('p2_p2_fo')
 const nomp2p3 = document.getElementById('p2_p3')
 const vidp2p3 = document.getElementById('p2_p3_vi')
+const fotp2p3 = document.getElementById('p2_p3_fo')
 
 const infovs = document.getElementById('info_vs')
 const info1 = document.getElementById('info_1')
@@ -48,8 +54,6 @@ fetch(
 		const dato2 = data.filter(e => e.usuario === 2)
 		player1.push(...dato1)
 		player2.push(...dato2)
-		console.log(dato1)
-		console.log(player1)
 	})
 	.then(() => {
 		iniciarCopias(player1, player2)
@@ -169,10 +173,8 @@ function atacar(pok1, pok2) {
 	const nombre2 = pok2.nombre
 	let vida = pok2.vidaActual
 	dano = Math.ceil(Math.random() * pok1.fuerzaActual)
-	const defe = Math.ceil(Math.random() * pok2.defensaActual)
 	if (pok1.tipo === 'Eléctrico' && pok2.tipo === 'Agua') dano *= 2
 	if (pok1.tipo === 'Agua' && pok2.tipo === 'Fuego') dano *= 2
-	dano -= defe
 
 	if (dano > 0) vida -= dano
 
@@ -256,7 +258,7 @@ botrein.addEventListener('click', function () {
 	ponerInfo1('')
 	ponerInfo2('')
 })
-nomp1p1.addEventListener('click', function () {
+fotp1p1.addEventListener('click', function () {
 	if (turno === 1 && copiaP1[0].vidaActual > 0) {
 		pokSel1 = 0
 		ponerVs()
@@ -264,7 +266,7 @@ nomp1p1.addEventListener('click', function () {
 		ponerInfo2('')
 	}
 })
-nomp1p2.addEventListener('click', function () {
+fotp1p2.addEventListener('click', function () {
 	if (turno === 1 && copiaP1[1].vidaActual > 0) {
 		pokSel1 = 1
 		ponerVs()
@@ -272,7 +274,7 @@ nomp1p2.addEventListener('click', function () {
 		ponerInfo2('')
 	}
 })
-nomp1p3.addEventListener('click', function () {
+fotp1p3.addEventListener('click', function () {
 	if (turno === 1 && copiaP1[2].vidaActual > 0) {
 		pokSel1 = 2
 		ponerVs()
@@ -280,7 +282,7 @@ nomp1p3.addEventListener('click', function () {
 		ponerInfo2('')
 	}
 })
-nomp2p1.addEventListener('click', function () {
+fotp2p1.addEventListener('click', function () {
 	if (turno === 2 && copiaP2[0].vidaActual > 0) {
 		pokSel2 = 0
 		ponerVs()
@@ -288,7 +290,7 @@ nomp2p1.addEventListener('click', function () {
 		ponerInfo2('')
 	}
 })
-nomp2p2.addEventListener('click', function () {
+fotp2p2.addEventListener('click', function () {
 	if (turno === 2 && copiaP2[1].vidaActual > 0) {
 		pokSel2 = 1
 		ponerVs()
@@ -296,8 +298,8 @@ nomp2p2.addEventListener('click', function () {
 		ponerInfo2('')
 	}
 })
-nomp2p3.addEventListener('click', function () {
-	if (turno === 2 && copiaP2[3].vidaActual > 0) {
+fotp2p3.addEventListener('click', function () {
+	if (turno === 2 && copiaP2[2].vidaActual > 0) {
 		pokSel2 = 2
 		ponerVs()
 		ponerInfo1(copiaP2[pokSel2].nombre + ' seleccionado')
