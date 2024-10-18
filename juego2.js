@@ -24,7 +24,42 @@ let pokSel1 = 0
 let pokSel2 = 0
 let turno = 1
 
-const player1 = [
+const options = {
+	method: 'GET',
+	headers: {
+		apikey:
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6dnRmb3lycHJleW1oaG9zcWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1NDU4NTMsImV4cCI6MjA0NDEyMTg1M30.HIL5UR_i5cmrUegdU6yZFSHwAOqilOAs8lhCUGSgtxo',
+		Authorization:
+			'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6dnRmb3lycHJleW1oaG9zcWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg1NDU4NTMsImV4cCI6MjA0NDEyMTg1M30.HIL5UR_i5cmrUegdU6yZFSHwAOqilOAs8lhCUGSgtxo',
+	},
+}
+const player1 = []
+const player2 = []
+let copiaP1 = {}
+let copiaP2 = {}
+
+fetch(
+	'https://bzvtfoyrpreymhhosqfz.supabase.co/rest/v1/pokemon?select=*',
+	options,
+)
+	.then(response => response.json())
+	.then(data => {
+		const dato1 = data.filter(e => e.usuario === 1)
+		const dato2 = data.filter(e => e.usuario === 2)
+		player1.push(...dato1)
+		player2.push(...dato2)
+		console.log(dato1)
+		console.log(player1)
+	})
+	.then(() => {
+		iniciarCopias(player1, player2)
+		ponerVs()
+		ponerNombres(copiaP1, copiaP2)
+		ponerVida(copiaP1, copiaP2)
+	})
+	.catch(err => console.error(err))
+
+/* const player1 = [
 	{
 		nombre: 'Pikachu1',
 		tipo: 'Eléctrico',
@@ -50,15 +85,32 @@ const player1 = [
 		defensa: 5,
 	},
 ]
-let copiaP1 = player1.map(e => ({
+*/
+function iniciarCopias(p1, p2) {
+	copiaP1 = player1.map(e => ({
+		...e,
+		vidaActual: e.vida,
+		fuerzaActual: e.fuerza,
+		defensaActual: e.defensa,
+		usoHab: true,
+	}))
+	copiaP2 = player2.map(e => ({
+		...e,
+		vidaActual: e.vida,
+		fuerzaActual: e.fuerza,
+		defensaActual: e.defensa,
+		usoHab: true,
+	}))
+}
+/* let copiaP1 = player1.map(e => ({
 	...e,
 	vidaActual: e.vida,
 	fuerzaActual: e.fuerza,
 	defensaActual: e.defensa,
 	usoHab: true,
-}))
+})) */
 
-const player2 = [
+/* const player2 = [
 	{
 		nombre: 'Pikachu2',
 		tipo: 'Eléctrico',
@@ -84,13 +136,14 @@ const player2 = [
 		defensa: 5,
 	},
 ]
-let copiaP2 = player2.map(e => ({
+	*/
+/* let copiaP2 = player2.map(e => ({
 	...e,
 	vidaActual: e.vida,
 	fuerzaActual: e.fuerza,
 	defensaActual: e.defensa,
 	usoHab: true,
-}))
+})) */
 
 function combate(pok1, pok2, turno, num2) {
 	let vida1 = pok1.vidaActual
@@ -170,9 +223,6 @@ function ponerInfo1(info) {
 function ponerInfo2(info) {
 	info2.textContent = info
 }
-ponerVs()
-ponerNombres(copiaP1, copiaP2)
-ponerVida(copiaP1, copiaP2)
 
 botluch.addEventListener('click', function () {
 	if (turno === 1) {
